@@ -1,5 +1,6 @@
-import { LitElement, css, html } from 'lit'
-import litLogo from './assets/lit.svg'
+import { LitElement, css, html } from "lit";
+import litLogo from "./assets/lit.svg";
+import { TodoList } from "./todo-list";
 
 /**
  * An example element.
@@ -19,13 +20,13 @@ export class MyElement extends LitElement {
        * The number of times the button has been clicked.
        */
       count: { type: Number },
-    }
+    };
   }
 
   constructor() {
-    super()
-    this.docsHint = 'Click on the Vite and Lit logos to learn more'
-    this.count = 0
+    super();
+    this.docsHint = "Click on the Vite and Lit logos to learn more";
+    this.count = 0;
   }
 
   render() {
@@ -45,11 +46,11 @@ export class MyElement extends LitElement {
         </button>
       </div>
       <p class="read-the-docs">${this.docsHint}</p>
-    `
+    `;
   }
 
   _onClick() {
-    this.count++
+    this.count++;
   }
 
   static get styles() {
@@ -122,8 +123,8 @@ export class MyElement extends LitElement {
           background-color: #f9f9f9;
         }
       }
-    `
+    `;
   }
 }
 
-window.customElements.define('my-element', MyElement)
+window.customElements.define("my-element", MyElement);
