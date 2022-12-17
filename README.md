@@ -110,3 +110,15 @@ Add classes conditionally:
 `class=${item.completed ? 'completed' : ''}`
 
 or use classmap
+
+Using a map
+`import {map} from 'lit/directives/map.js';`
+and later
+
+```
+<ul>
+  ${map(this.items, (item) => html`<li>${item}</li>`)}
+</ul>
+```
+
+Lit map is useful when you are working with anything that's not a js array.
