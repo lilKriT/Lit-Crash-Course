@@ -111,7 +111,7 @@ Add classes conditionally:
 
 or use classmap
 
-Using a map
+Map
 `import {map} from 'lit/directives/map.js';`
 and later
 
@@ -122,3 +122,10 @@ and later
 ```
 
 Lit map is useful when you are working with anything that's not a js array.
+
+Range
+`import {map} from 'lit/directives/map.js';`
+`range(10)`
+
+Repeat
+`import {repeat} from 'lit/directives/repeat.js';`
