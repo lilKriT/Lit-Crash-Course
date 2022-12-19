@@ -129,3 +129,31 @@ Range
 
 Repeat
 `import {repeat} from 'lit/directives/repeat.js';`
+
+Reactive properties
+You need to add this code:
+
+```
+static properties = {
+    result: {},
+  };
+```
+
+Lit automatically adds accessors
+Mutating doesn't trigger update!
+You can trigger it yourself with `requestUpdate(changedProperties)`
+You can also override `shouldUpdate(changedProperties)` - by default, it always returns `true`
+
+Example:
+
+```
+shouldUpdate(changedProperties) {
+    return !(changedProperties.size === 1 && changedProperties.has('duration'));
+  }
+```
+
+calculating stuff for update
+`willUpdate(changedProperties)`
+
+After update
+`updated(changedProperties)`
