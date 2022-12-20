@@ -157,3 +157,70 @@ calculating stuff for update
 
 After update
 `updated(changedProperties)`
+
+Attributes
+Attribute (html):
+`<input value="something">`
+Property (js):
+`input.value = 15;`
+
+Sometimes they have the same names.
+
+You can turn off attribute to property conversion off:
+`date: {attribute: false},`
+you can also turn on property to attribute conversion:
+`reflect: true`
+
+Built in converters:
+
+- String
+- Bool
+- Number
+- Array
+- Object
+
+Example:
+properties:
+`dateStr: {type: String, attribute: "date-str"}`
+
+how to display, the basic way:
+
+```
+willUpdate(changed) {
+    if (changed.has('dateStr') && this.dateStr) {
+      this.date = new Date(this.dateStr);
+    }
+  }
+```
+
+It's better to define a custom attribute converter
+example:
+new file:
+
+```
+'use strict';
+
+export const dateConverter = (locale) => {
+ return {
+  toAttribute: (date) => {
+   return date.toLocaleDateString(locale);
+  },
+   fromAttribute: (value) => {
+    return new Date(value);
+   }
+ }
+}
+```
+
+then import
+`import {dateConverter} from "./date-converter.js";`
+
+and add converter to property
+
+```
+static properties = {
+    date: {converter: dateConverter(navigator.language), reflect: true},
+  };
+```
+
+You won't need dateStr, or willUpdate.
