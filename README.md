@@ -224,3 +224,35 @@ static properties = {
 ```
 
 You won't need dateStr, or willUpdate.
+
+## Async Directives
+
+Directive is a function that updates the value they render after the fact.
+
+Make a directive
+
+```
+import {directive, Directive} from 'lit/directive.js';
+
+class TimeAgoDirective extends Directive {
+}
+
+export const timeAgo = directive(TimeAgoDirective);
+```
+
+Add a render method with the arguments you want
+
+```
+render(time) {
+    return time.toDateString();
+  }
+```
+
+How to use it:
+import
+`import {timeAgo} from './time-ago.js';`
+
+Then call the directive:
+`${timeAgo(timeCreated)}`
+
+for working with time, it's useful to get `timeago` npm package
