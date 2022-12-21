@@ -256,3 +256,107 @@ Then call the directive:
 `${timeAgo(timeCreated)}`
 
 for working with time, it's useful to get `timeago` npm package
+
+## Making it async
+
+Instead of Directive, use AsyncDirective
+
+```
+import {directive, AsyncDirective} from 'lit/async-directive.js';
+
+class TimeAgoDirective extends AsyncDirective {
+```
+
+It adds a few useful methods:
+`setValue()` - basically rerenders
+`disconnected()` - unsubscribe
+`reconnected()` - subscribe again
+
+## Adding Update / Timer
+
+Example:
+
+```
+timer = undefined;
+
+  ensureTimerStarted() {
+    if (this.timer === undefined) {
+      this.timer = setInterval(() => {
+        /* do some periodic work */
+      }, 3000);
+    }
+  }
+```
+
+Then run it in update.
+Example:
+
+```
+update(part, [time]) {
+    if (this.isConnected) {
+      this.ensureTimerStarted();
+    }
+    return this.render(time);
+  }
+```
+
+Update the value:
+you need to store it in the class.
+update it whenever needed.
+
+```
+time;
+
+ update(part, [time]) {
+    this.time = time;
+    // dont change the rest
+  }
+```
+
+use `setValue` where needed.
+
+## Add a disconnect
+
+To avoid memory leaks.
+Add a method to unsubscribe:
+
+```
+ensureTimerStopped() {
+    clearInterval(this.timer);
+    this.timer = undefined;
+  }
+```
+
+and call it:
+
+```
+disconnected() {
+    this.ensureTimerStopped();
+  }
+```
+
+Then add reconnected:
+
+```
+reconnected() {
+    this.ensureTimerStarted();
+  }
+```
+
+You can test it:
+remove and re-add an element, for example on click.
+
+```
+handleClick() {
+    const parent = this.parentNode;
+    this.remove();
+    setTimeout(() => parent.appendChild(this), 1000);
+  }
+```
+
+add console logs.
+
+## Use
+
+You can use them in any expression.
+`<comment-card user="lit Developer" time=${timeAgo(timeCreated)}`
