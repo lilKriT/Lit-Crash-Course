@@ -360,3 +360,35 @@ add console logs.
 
 You can use them in any expression.
 `<comment-card user="lit Developer" time=${timeAgo(timeCreated)}`
+
+## SVG patterns
+
+```
+const helloHTML = html`
+  <svg>
+    ${svg`<text>Hello, SVG!</text>`}
+  </svg>
+`;
+```
+
+```
+const createElement = (chars) => svg`
+  <text
+    dominant-baseline="hanging"
+    font-family="monospace"
+    font-size="24px">
+    ${chars}
+  </text>
+`;
+```
+
+```
+  static properties = {
+    chars: {type: String},
+  };
+
+  constructor() {
+    super();
+    this.chars = 'lit';
+  }
+```
