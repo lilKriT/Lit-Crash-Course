@@ -392,3 +392,44 @@ const createElement = (chars) => svg`
     this.chars = 'lit';
   }
 ```
+
+`<def>` contains svg elements without rendering them.
+
+```
+const helloDefs = svg`
+  <defs>
+    <text id="chars">Hello defs!</text>
+  </defs>
+`;
+```
+
+Then to use a defined element, `<use href="#chars">`
+
+```
+const helloDefs = svg`
+  <defs>
+    <text id="chars">Hello defs!</text>
+  </defs>
+  <use href="#chars"></use>
+`;
+```
+
+you can apply effects, like
+
+```
+<use
+    href="#chars"
+    transform="rotate(180, 0,0)">
+  </use>
+```
+
+`<g>` applies properties to all the children:
+
+```
+<g transform="translate(50, 50)">
+    <use
+      href="#chars"
+      transform="rotate(${currRotation}, 0,0)">
+    </use>
+  </g>
+```
