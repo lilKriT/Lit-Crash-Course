@@ -486,3 +486,33 @@ const helloPatternFill = svg`
   <rect fill="url(#hello-pattern)" width="200" height="200"></rect>
 `;
 ```
+
+## Theme pattern with CSS
+
+Adding CSS to SVG
+
+```
+const helloSvgCss = css`
+  .background {
+    fill: #000000;
+  }
+`;
+```
+
+Add a class to an element like this:
+
+```
+const helloCssClasses = html`
+  <rect class="background"></rect>
+`;
+```
+
+You can also add properties:
+
+```
+const helloCssCustomProperties = css`
+  .background {
+    fill: var(--background-color, #000000);
+  }
+`;
+```
