@@ -433,3 +433,27 @@ you can apply effects, like
     </use>
   </g>
 ```
+
+## Tile Pattern
+
+Create a clip path:
+
+```
+const helloClipPath = svg`
+  <clipPath id="rect-clip">
+    <rect width="200" height="200"></rect>
+  </clipPath>
+`;
+```
+
+Then refer to it in a rect:
+
+```
+const helloTile = svg`
+  <rect
+    clip-path="url(#rect-clip)"
+    width="300"
+    height="300"
+    fill="#000000">
+  </rect>
+```
