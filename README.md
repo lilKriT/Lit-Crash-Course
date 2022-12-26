@@ -457,3 +457,32 @@ const helloTile = svg`
     fill="#000000">
   </rect>
 ```
+
+## Repeat a tile with pattern
+
+`<pattern>` repeats an element over 2D space
+select `<patternUnits>`, like `userSpaceOnUse`
+
+```
+const helloPattern = svg`
+  <pattern patternUnits="userSpaceOnUse">
+    ${createTile()}
+  </pattern>
+`;
+```
+
+`<pattern>`needs an id, and then add "fill"
+
+```
+const helloPattern = svg`
+  <pattern
+    id="hello-pattern"
+    patternUnits="userSpaceOnUse">
+    ${createTile()}
+  </pattern>
+`;
+
+const helloPatternFill = svg`
+  <rect fill="url(#hello-pattern)" width="200" height="200"></rect>
+`;
+```
