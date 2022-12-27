@@ -659,3 +659,64 @@ show = () => {
   });
 };
 ```
+
+Adding animation:
+Add a state:
+
+```
+static properties = {
+  offset: {type: Number},
+  showing: {reflect: true, type: Boolean},
+};
+constructor() {
+  super();
+  this.offset = 4;
+  this.showing = false;
+}
+```
+
+Then add css:
+
+```
+:host {
+  /* ... */
+  opacity: 0;
+  transform: scale(0.75);
+  transition: opacity, transform;
+  transition-duration:  0.33s;
+}
+
+:host([showing]) {
+  opacity: 1;
+  transform: scale(1);
+}
+```
+
+Show it:
+
+```
+show = () => {
+  // ...
+  this.showing = true;
+};
+```
+
+Hide and add method on finishing hiding:
+
+```
+hide = () => {
+  this.showing = false;
+};
+
+finishHide = () => {
+  if (!this.showing) {
+    this.style.display = 'none';
+  }
+};
+```
+
+Attach finishHide in the constructor:
+
+```
+this.addEventListener('transitionend', this.finishHide);
+```
