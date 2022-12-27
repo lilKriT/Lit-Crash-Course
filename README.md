@@ -529,3 +529,81 @@ It will show it's content (children)
 ## :host
 
 It's basically `this` scope of an element. Useful for styling.
+
+## Creating a tooltip
+
+Make a tooltip component with slot inside. Style it.
+
+```
+render() {
+    return html`<slot></slot>`;
+  }
+```
+
+Hide / Show
+
+```
+show = () => {
+  this.style.cssText = '';
+};
+
+hide = () => {
+  this.style.display = 'none';
+};
+```
+
+Hide by default:
+
+```
+connectedCallback() {
+  super.connectedCallback();
+  this.hide();
+}
+```
+
+Add event listeners:
+Define an array of relevant events like this:
+
+```
+const enterEvents = ['pointerenter', 'focus'];
+const leaveEvents = ['pointerleave', 'blur', 'keydown', 'click'];
+```
+
+add event listeners:
+
+```
+_target = null;
+
+get target() {
+  return this._target;
+}
+
+set target(target) {
+  // Remove events from existing target
+  if (this.target) {
+    enterEvents.forEach((name) =>
+      this.target.removeEventListener(name, this.show)
+    );
+    leaveEvents.forEach((name) =>
+      this.target.removeEventListener(name, this.hide)
+    );
+  }
+  // Add events to new target
+  if (target) {
+    enterEvents.forEach((name) => target.addEventListener(name, this.show));
+    leaveEvents.forEach((name) => target.addEventListener(name, this.hide));
+  }
+  this._target = target;
+}
+```
+
+Not sure what this does:
+
+```
+connectedCallback() {
+  //...
+  this.target ??= this.previousElementSibling;
+}
+```
+
+`??=` only sets something if it's not set.
