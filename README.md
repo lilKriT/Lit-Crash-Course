@@ -607,3 +607,25 @@ connectedCallback() {
 ```
 
 `??=` only sets something if it's not set.
+
+Basic positioning:
+
+```
+static properties = {
+  offset: {type: Number},
+};
+
+constructor() {
+  super();
+  this.offset = 4;
+}
+```
+
+```
+show = () => {
+  this.style.cssText = '';
+  const {x, y, height} = this.target.getBoundingClientRect();
+  this.style.left = `${x}px`;
+  this.style.top = `${y + height + this.offset}px`;
+};
+```
