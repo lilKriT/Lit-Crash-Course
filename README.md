@@ -516,3 +516,12 @@ const helloCssCustomProperties = css`
   }
 `;
 ```
+
+## Displaying children as slot
+
+Insert `<slot></slot>` in your component.
+It will show it's content (children)
+
+```
+<my-component>This will be displayed</my-component>
+```
