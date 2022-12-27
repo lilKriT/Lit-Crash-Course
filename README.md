@@ -525,3 +525,7 @@ It will show it's content (children)
 ```
 <my-component>This will be displayed</my-component>
 ```
+
+## :host
+
+It's basically `this` scope of an element. Useful for styling.
