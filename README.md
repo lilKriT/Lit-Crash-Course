@@ -946,3 +946,48 @@ class TooltipDirective extends Directive {
 export const tooltip = directive(TooltipDirective);
 
 ```
+
+## Styling slotted children:
+
+Use this selector:
+`::slotted(*)`
+
+It works same as
+`:host` but for slotted elements.
+
+## Making a carousel
+
+Start with the DOM. Add slotted elements:
+
+```
+<div>
+  <slot></slot>
+</div>
+```
+
+and style it.
+
+Added a selected property:
+
+```
+static properties = { selected: {type: Number} };
+
+selectedInternal = 0;
+constructor () {
+  super();
+  this.selected = 0;
+}
+
+get maxSelected() {
+  return this.childElementCount - 1;
+}
+
+hasValidSelected() {
+  return this.selected >= 0 && this.selected <= this.maxSelected;
+}
+
+render() {
+  if (this.hasValidSelected()) {
+    this.selectedInternal = this.selected;
+  }
+```
