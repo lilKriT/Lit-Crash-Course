@@ -1037,3 +1037,34 @@ clickHandler(e) {
   this.dispatchEvent(change);
 }
 ```
+
+Adding animations:
+update code like this.
+
+```
+import {styleMap} from 'lit/directives/style-map.js';
+
+// ...
+left = 0;
+render() {
+  if (this.hasValidSelected()) {
+    this.selectedInternal = this.selected;
+  }
+  const animateLeft = ``;
+  const selectedLeft = ``;
+  const previousLeft = ``;
+  return html`
+    <div class="fit"
+      @click=${this.clickHandler}
+      style=${styleMap({left: animateLeft})}
+    >
+      <div class="fit" style=${styleMap({left: previousLeft})}>
+        <slot name="previous"></slot>
+      </div>
+      <div class="fit selected" style=${styleMap({left: selectedLeft})}>
+        <slot name="selected"></slot>
+      </div>
+    </div>
+  `;
+}
+```
