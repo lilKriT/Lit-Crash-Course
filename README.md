@@ -1068,3 +1068,59 @@ render() {
   `;
 }
 ```
+
+To slot the previous item:
+
+```
+get selectedSlot() {
+  return (this.__selectedSlot ??=
+    this.renderRoot?.querySelector('slot[name="selected"]') ?? null);
+}
+
+get previousSlot() {
+  return (this.__previousSlot ??=
+    this.renderRoot?.querySelector('slot[name="previous"]') ?? null);
+}
+```
+
+Then update slots:
+
+```
+updateSlots() {
+  // unset old slot state
+  this.selectedSlot.assignedElements()[0]?.removeAttribute('slot');
+  this.previousSlot.assignedElements()[0]?.removeAttribute('slot');
+  // set slots
+  this.children[this.previous]?.setAttribute('slot', 'previous');
+  this.children[this.selected]?.setAttribute('slot', 'selected');
+}
+```
+
+Now position the elements:
+
+New Render:
+
+```
+render() {
+  const p = this.selectedInternal;
+  const s = (this.selectedInternal =
+    this.hasValidSelected() ? this.selected : this.selectedInternal);
+  const shouldMove = this.hasUpdated && s !== p;
+  const atStart = p === 0;
+  const toStart = s === 0;
+  const atEnd = p === this.maxSelected;
+  const toEnd = s === this.maxSelected;
+  const shouldAdvance = shouldMove &&
+    (atEnd ? toStart : atStart ? !toEnd : s > p);
+  const delta = (shouldMove ? Number(shouldAdvance) || -1 : 0) * 100;
+  this.left -= delta;
+  const animateLeft = `${this.left}%`;
+  const selectedLeft = `${-this.left}%`;
+  const previousLeft = `${-this.left - delta}%`;
+```
+
+And add directives:
+`import {animate} from '@lit-labs/motion';`
+
+and
+`${animate()}` to your html elements
