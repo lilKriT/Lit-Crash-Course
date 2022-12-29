@@ -991,3 +991,49 @@ render() {
     this.selectedInternal = this.selected;
   }
 ```
+
+To only render the selected element:
+
+```
+<div class="fit">
+  <slot name="selected"></slot>
+</div>
+```
+
+```
+previous = 0;
+updated(changedProperties) {
+  if (changedProperties.has('selected') && this.hasValidSelected()) {
+    this.updateSlots();
+    this.previous = this.selected;
+  }
+}
+
+updateSlots() {
+  this.children[this.previous]?.removeAttribute('slot');
+  this.children[this.selected]?.setAttribute('slot', 'selected');
+}
+```
+
+use this in html
+
+```
+<motion-carousel id="carousel" selected="4">
+```
+
+Then allow changing of the element
+add click event
+
+```
+<div class="fit" @click=${this.clickHandler}>
+```
+
+```
+clickHandler(e) {
+  const i = this.selected + (Number(!e.shiftKey) || -1);
+  this.selected = i > this.maxSelected ? 0 : i < 0 ? this.maxSelected : i;
+  const change = new CustomEvent('change',
+    {detail: this.selected, bubbles: true, composed: true});
+  this.dispatchEvent(change);
+}
+```
