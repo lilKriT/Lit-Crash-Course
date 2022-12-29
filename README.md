@@ -1171,3 +1171,63 @@ const splitWords = this.words.split('.');
 const word = splitWords[this.idx % splitWords.length];
 return html`<pre>${word}</pre>`;
 ```
+
+Cycling the words:
+`tickToNextWord = () => { this.idx += 1; };`
+
+Add callbacks:
+
+```
+intervalTimer;
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.intervalTimer = setInterval(this.tickToNextWord, 1000);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    clearInterval(this.intervalTimer);
+    this.intervalTimer = undefined;
+  }
+```
+
+Styling:
+just use static styles css.
+
+Adding events:
+add a state:
+`playDirection: {state: true},`
+in constructor:
+`this.playDirection = 1;`
+
+fix the index counting:
+`const idx = ((this.idx % splitWords.length) + splitWords.length) % splitWords.length;`
+change tick:
+`tickToNextWord = () => { this.idx += this.playDirection; };`
+
+and add a method to switch direction
+
+```
+switchPlayDirection() {
+    this.playDirection *= -1;
+  }
+```
+
+and render:
+`@click=${this.switchPlayDirection}`
+
+Dynamically change style:
+use classMap directive (it helps change a list of classes)
+`import {classMap} from 'lit/directives/class-map.js';`
+and
+
+````
+return html`<pre
+      class="${classMap({ backwards: this.playDirection === -1 })}"
+      ...
+    >${word}</pre>`;
+    ```
+````
+
+Then add styles.
