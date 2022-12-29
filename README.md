@@ -1124,3 +1124,50 @@ And add directives:
 
 and
 `${animate()}` to your html elements
+
+## Building a word viewer
+
+Start with basic element:
+
+```
+import {html, LitElement} from 'lit';
+
+export class WordViewer extends LitElement {
+  render() {
+    // TODO: Render something!
+    return html`<pre>Expressive Template</pre>`;
+  }
+}
+
+customElements.define('word-viewer', WordViewer);
+```
+
+Add reactive properties:
+
+```
+static properties = {
+    words: {},
+  };
+
+  constructor() {
+    super();
+    this.words = 'initial value';
+  }
+```
+
+and change the words through html:
+`<word-viewer words="These.are.words"></word-viewer>`
+
+Displaying one at a time:
+add index:
+`idx: {state: true},` to properties
+state true - means they will not have an attribute.
+`this.idx = 0;` in constructor
+
+Display only one:
+
+```
+const splitWords = this.words.split('.');
+const word = splitWords[this.idx % splitWords.length];
+return html`<pre>${word}</pre>`;
+```
